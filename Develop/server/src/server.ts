@@ -18,7 +18,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // ✅ Servir archivos estáticos del frontend (Vite build)
-app.use(express.static(path.resolve(__dirname, '../../client/dist')));
+app.use(express.static(path.resolve(__dirname, '../../../client/dist')));
 
 // ✅ Parsear JSON
 app.use(express.json());
