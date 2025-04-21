@@ -13,27 +13,30 @@ import { fileURLToPath } from 'url';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// 🧠 Esto es para usar __dirname en ES Modules (como parece ser tu caso)
+// 🧠 __dirname para ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ✅ Servir archivos estáticos del frontend (Vite build)
-app.use(express.static(path.resolve(__dirname, '../../../client/dist')));
+// ✅ Ruta absoluta para dist (ajustada desde /server/src hacia /client/dist)
+const distPath = path.resolve(__dirname, '../../../client/dist');
+
+// ✅ Servir estáticos del frontend
+app.use(express.static(distPath));
 
 // ✅ Parsear JSON
 app.use(express.json());
 
-// ✅ Rutas de tu backend
+// ✅ Rutas backend
 app.use(routes);
 
-// ✅ Fallback para SPA (React Router)
+// ✅ Fallback SPA
 app.get('*', (_, res) => {
-  res.sendFile(path.resolve(__dirname, '../../client/dist/index.html'));
+  res.sendFile(path.join(distPath, 'index.html'));
 });
 
-// ✅ Sincronizar DB y arrancar servidor
+// ✅ Sync DB y arrancar server
 sequelize.sync({ force: forceDatabaseRefresh }).then(() => {
   app.listen(PORT, () => {
-    console.log(`✅ Server listening on port ${PORT}`);
+    console.log(`✅ Server is running on port ${PORT}`);
   });
 });
