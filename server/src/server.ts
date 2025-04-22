@@ -18,7 +18,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // ✅ Ruta absoluta para dist (ajustada desde /server/src hacia /client/dist)
-const distPath = path.resolve(__dirname, '../../../client/dist');
+const distPath = path.resolve(__dirname, '../../client/dist');
 
 // ✅ Servir estáticos del frontend
 app.use(express.static(distPath));
